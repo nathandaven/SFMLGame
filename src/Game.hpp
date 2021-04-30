@@ -24,9 +24,7 @@ private:
 	util::Platform platform;
 
 	// Game Variables
-	//sf::RenderWindow* window;
 	sf::VideoMode videoMode;
-	//sf::Event event;
 
 	// Private Functions
 	void initVariables();
@@ -35,6 +33,10 @@ private:
 	// Game Data ref
 	GameDataRef _data = std::make_shared<GameData>();
 
+	// Time data
+	const float dt = 1.0f / 60.0f;
+	sf::Clock _clock;
+
 public:
 	// Constructors and Destructors
 	Game();
@@ -42,11 +44,6 @@ public:
 
 	// Accessors
 	bool isRunning() const;
-
-	// Functions
-	void updatePollEvents();
-	void update();
-	void render();
 	void run();
 };
 

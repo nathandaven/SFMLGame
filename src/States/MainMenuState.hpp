@@ -12,8 +12,8 @@ public:
 
 	void initState();
 	void updateInputs();
-	void updateState(float dt);
-	void drawState(float dt);
+	void updateState(float dt __attribute__((unused)));
+	void drawState(float dt __attribute__((unused)));
 
 private:
 	GameDataRef _data;

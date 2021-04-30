@@ -31,21 +31,14 @@ void MainMenuState::updateInputs()
 	}
 }
 
-void MainMenuState::updateState(float dt)
+// marks dt to not warn compiler
+void MainMenuState::updateState(float dt __attribute__((unused)))
 {
-	if (dt > 0)
-	{
-
-		std::cout << dt;
-	}
 }
 
-void MainMenuState::drawState(float dt)
+// marks dt to not warn compiler
+void MainMenuState::drawState(float dt __attribute__((unused)))
 {
-	if (dt > 0)
-	{
-		std::cout << dt;
-	}
 	// just for fun, heres hello world text
 	// SAMPLE RENDER CODE:
 

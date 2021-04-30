@@ -14,22 +14,7 @@ int main()
 	std::cout << "Hello World!" << std::endl;
 #endif
 
-	/* 	// initializing a new Game
-	Game game;
-
-	// Game Loop
-	while (game.isRunning())
-	{
-
-		// Update
-		game.update();
-
-		// Render
-		game.render();
-	}
-
-	return 0; */
-
+	// initializing a new Game
 	Game();
 
 	return 0;

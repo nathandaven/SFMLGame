@@ -41,6 +41,8 @@ Game::Game()
 {
 	this->initVariables();
 	this->initWindow();
+
+	// running the new game
 	this->run();
 }
 
@@ -55,43 +57,41 @@ bool Game::isRunning() const
 	return this->_data->window->isOpen();
 }
 
-// Functions
-void Game::updatePollEvents()
-{
-}
-
-void Game::update()
-{
-	this->updatePollEvents();
-}
-
-/*
-@return null
-renders all game objects on screen (clear -> render -> display)
- */
-void Game::render()
-{
-	// testing states
-}
-
 void Game::run()
 {
 	// initializing a new Game
+
+	// time initialization
+	float newTime, frameTime, interpolation;
+	float currentTime = this->_clock.getElapsedTime().asSeconds();
+	float accumulator = 0.0f;
 
 	// Game Loop
 	while (this->isRunning())
 	{
 
-		// Update
-		//this->update();
-
-		// Render
-		//this->render();
-
-		// state machine
 		this->_data->machine.processStates();
-		this->_data->machine.getActiveState()->updateInputs();
-		this->_data->machine.getActiveState()->updateState(0);
-		this->_data->machine.getActiveState()->drawState(0);
+
+		newTime = this->_clock.getElapsedTime().asSeconds();
+		frameTime = newTime - currentTime;
+
+		if (frameTime > 0.25f)
+		{
+			frameTime = 0.25f;
+		}
+
+		currentTime = newTime;
+		accumulator += frameTime;
+
+		while (accumulator >= dt)
+		{
+			this->_data->machine.getActiveState()->updateInputs();
+			this->_data->machine.getActiveState()->updateState(dt);
+
+			accumulator -= dt;
+		}
+
+		interpolation = accumulator / dt;
+		this->_data->machine.getActiveState()->drawState(interpolation);
 	}
 }
