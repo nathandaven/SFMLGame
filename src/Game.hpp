@@ -1,3 +1,5 @@
+#include "Engine/AssetManager.hpp"
+#include "Engine/InputManager.hpp"
 #include "Engine/StateMachine.hpp"
 #include "Global.hpp"
 #include "Platform/Platform.hpp"
@@ -12,7 +14,9 @@
 struct GameData
 {
 	sf::RenderWindow* window;
-	Engine::StateMachine machine;
+	Engine::StateMachine states;
+	Engine::InputManager inputs;
+	Engine::AssetManager assets;
 };
 
 typedef std::shared_ptr<GameData> GameDataRef;
@@ -21,10 +25,10 @@ class Game
 
 private:
 	// For platform specific methods
-	util::Platform platform;
+	util::Platform _platform;
 
 	// Game Variables
-	sf::VideoMode videoMode;
+	sf::VideoMode _videoMode;
 
 	// Private Functions
 	void initVariables();

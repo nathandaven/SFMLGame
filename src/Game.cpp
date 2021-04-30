@@ -13,7 +13,7 @@
 void Game::initVariables()
 {
 	this->_data->window = nullptr;
-	this->_data->machine.addState(Engine::StateRef(new MainMenuState(this->_data)), false);
+	this->_data->states.addState(Engine::StateRef(new MainMenuState(this->_data)), false);
 }
 void Game::initWindow()
 {
@@ -21,15 +21,15 @@ void Game::initWindow()
 	this->_data->window = new sf::RenderWindow();
 
 	// in Windows at least, this must be called before creating the window
-	float screenScalingFactor = platform.getScreenScalingFactor(this->_data->window->getSystemHandle());
+	float screenScalingFactor = _platform.getScreenScalingFactor(this->_data->window->getSystemHandle());
 
 	// Use the screenScalingFactor to create video mode and set screen size - 720p by default
-	this->videoMode.height = SCREEN_HEIGHT * screenScalingFactor;
-	this->videoMode.width = SCREEN_WIDTH * screenScalingFactor;
+	this->_videoMode.height = SCREEN_HEIGHT * screenScalingFactor;
+	this->_videoMode.width = SCREEN_WIDTH * screenScalingFactor;
 
 	// creating our window view using the video mode and disabling resizablilty
-	this->_data->window->create(this->videoMode, "Test Game 1", sf::Style::Titlebar | sf::Style::Close);
-	platform.setIcon(this->_data->window->getSystemHandle());
+	this->_data->window->create(this->_videoMode, "Test Game 1", sf::Style::Titlebar | sf::Style::Close);
+	_platform.setIcon(this->_data->window->getSystemHandle());
 
 	// sets FPS vsync
 	this->_data->window->setFramerateLimit(60);
@@ -70,7 +70,7 @@ void Game::run()
 	while (this->isRunning())
 	{
 
-		this->_data->machine.processStates();
+		this->_data->states.processStates();
 
 		newTime = this->_clock.getElapsedTime().asSeconds();
 		frameTime = newTime - currentTime;
@@ -85,13 +85,13 @@ void Game::run()
 
 		while (accumulator >= dt)
 		{
-			this->_data->machine.getActiveState()->updateInputs();
-			this->_data->machine.getActiveState()->updateState(dt);
+			this->_data->states.getActiveState()->updateInputs();
+			this->_data->states.getActiveState()->updateState(dt);
 
 			accumulator -= dt;
 		}
 
 		interpolation = accumulator / dt;
-		this->_data->machine.getActiveState()->drawState(interpolation);
+		this->_data->states.getActiveState()->drawState(interpolation);
 	}
 }
