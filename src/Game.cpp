@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "Engine/StateMachine.hpp"
+#include "States/GameState.hpp"
 #include "States/MainMenuState.hpp"
 
 /*
@@ -14,6 +15,7 @@ void Game::initVariables()
 {
 	this->_data->window = nullptr;
 	this->_data->states.addState(Engine::StateRef(new MainMenuState(this->_data)), false);
+	//this->_data->states.addState(Engine::StateRef(new GameState(this->_data)), false);
 }
 void Game::initWindow()
 {

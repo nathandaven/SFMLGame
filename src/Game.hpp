@@ -1,6 +1,7 @@
 #include "Engine/AssetManager.hpp"
 #include "Engine/InputManager.hpp"
 #include "Engine/StateMachine.hpp"
+#include "Entities/Player.hpp"
 #include "Global.hpp"
 #include "Platform/Platform.hpp"
 
@@ -14,6 +15,8 @@
 struct GameData
 {
 	sf::RenderWindow* window;
+	//Player player;
+
 	Engine::StateMachine states;
 	Engine::InputManager inputs;
 	Engine::AssetManager assets;

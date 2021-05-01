@@ -1,6 +1,6 @@
 #include "States/MainMenuState.hpp"
-#include "Game.hpp"
-#include "Global.hpp"
+#include "Engine/StateMachine.hpp"
+#include "States/GameState.hpp"
 
 MainMenuState::MainMenuState(GameDataRef data) :
 	_data(data)
@@ -24,6 +24,8 @@ void MainMenuState::updateInputs()
 			case sf::Event::KeyPressed:
 				if (this->event.key.code == sf::Keyboard::Escape)
 					this->_data->window->close();
+				if (this->event.key.code == sf::Keyboard::Enter)
+					this->_data->states.addState(Engine::StateRef(new GameState(this->_data)), false);
 				break;
 			default:
 				break;
@@ -46,7 +48,7 @@ void MainMenuState::drawState(float dt __attribute__((unused)))
 	this->_data->window->clear(sf::Color::Black);
 
 	// write text
-	sf::Text text;
+	sf::Text title;
 	sf::Font font;
 
 	// throws error if cant load font
@@ -57,26 +59,26 @@ void MainMenuState::drawState(float dt __attribute__((unused)))
 	}
 
 	// select the font
-	text.setFont(font); // font is a sf::Font
+	title.setFont(font); // font is a sf::Font
 
 	// set the string to display
-	text.setString("Hello world!");
+	title.setString("Epic 2D Game!");
 
 	// set the character size
-	text.setCharacterSize(24); // in pixels, not points!
+	title.setCharacterSize(24); // in pixels, not points!
 
 	// set the color
-	text.setFillColor(sf::Color::White);
+	title.setFillColor(sf::Color::White);
 
 	// set the text style
-	text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+	title.setStyle(sf::Text::Bold | sf::Text::Underlined);
 
-	text.setPosition(
-		(this->_data->window->getSize().x / 2) - (text.getLocalBounds().width / 2),
-		(this->_data->window->getSize().y / 2) - (text.getLocalBounds().height / 2));
+	title.setPosition(
+		(this->_data->window->getSize().x / 2) - (title.getLocalBounds().width / 2),
+		(this->_data->window->getSize().y / 2) - (title.getLocalBounds().height / 2));
 
 	// inside the main loop, between window.clear() and window.display()
-	this->_data->window->draw(text);
+	this->_data->window->draw(title);
 
 	// END SAMPLE RENDER CODE
 
