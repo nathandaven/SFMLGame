@@ -1,22 +1,25 @@
 
 #pragma once
 
+#include "Global.hpp"
+
 class Player
 {
 private:
-	sf::Vector2i _position;
+	sf::Vector2f _position;
+	sf::Vector2f _velocity;
+	float _maxVelocity;
+	float _del;
 
 	// temporary
 	sf::CircleShape _sprite;
 
 public:
-	Player(int x, int y);
+	Player(float x, float y);
 	//~Player();
 
-	void translate(int x, int y);
-	void moveUp();
-	void moveDown();
-	void moveLeft();
-	void moveRight();
+	void translate(float x, float y);
+	void move(float x, float y);
+	void update(float dt);
 	void draw(sf::RenderWindow* window);
 };

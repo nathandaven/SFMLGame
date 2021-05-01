@@ -25,17 +25,6 @@ void GameState::updateInputs()
 				// closing
 				if (this->event.key.code == sf::Keyboard::Escape)
 					this->_data->window->close();
-
-				if (this->event.key.code == sf::Keyboard::A)
-					this->_player.moveLeft();
-				if (this->event.key.code == sf::Keyboard::W)
-					this->_player.moveUp();
-				if (this->event.key.code == sf::Keyboard::D)
-					this->_player.moveRight();
-				if (this->event.key.code == sf::Keyboard::S)
-					this->_player.moveDown();
-				break;
-
 			default:
 				break;
 		}
@@ -45,13 +34,15 @@ void GameState::updateInputs()
 // marks dt to not warn compiler
 void GameState::updateState(float dt __attribute__((unused)))
 {
+
+	this->_player.update(dt);
 }
 
 // marks dt to not warn compiler
 void GameState::drawState(float dt __attribute__((unused)))
 {
 	// background color
-	this->_data->window->clear(sf::Color::Blue);
+	this->_data->window->clear(sf::Color::Black);
 
 	// drawing the player sprite
 	this->_player.draw(this->_data->window);
