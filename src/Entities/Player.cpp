@@ -20,12 +20,10 @@ void Player::translate(float x, float y)
 }
 void Player::move(float x, float y)
 {
-	this->_velocity.x += x;
-	this->_velocity.y += y;
 
 	/* 	if (std::abs(_velocity.x) > _maxVelocity)
 	{
-		_velocity.x = _maxVelocity;
+		_velocity.x *= _maxVelocity;
 	}
 
 	if (std::abs(_velocity.y) > _maxVelocity)
@@ -33,15 +31,8 @@ void Player::move(float x, float y)
 		_velocity.y = _maxVelocity;
 	} */
 
-	/* 	if (_position.x > 0 && _position.x < SCREEN_WIDTH - _sprite.getGlobalBounds().width)
-	{
-		this->_velocity.x += x;
-	}
-
-	if (_position.y > 0 && _position.y < SCREEN_HEIGHT - _sprite.getGlobalBounds().height)
-	{
-		this->_velocity.y += y;
-	} */
+	this->_velocity.x += x;
+	this->_velocity.y += y;
 }
 
 void Player::update(float dt __attribute__((unused)))
@@ -59,6 +50,16 @@ void Player::update(float dt __attribute__((unused)))
 		move(0.0f, this->_del);
 
 	translate(this->_position.x + (this->_velocity.x * dt), this->_position.y + (this->_velocity.y * dt));
+
+	if (_position.x < 0 || _position.x > SCREEN_WIDTH - _sprite.getGlobalBounds().width)
+	{
+		this->_velocity.x = this->_velocity.x * -1;
+	}
+
+	if (_position.y < 0 || _position.y > SCREEN_HEIGHT - _sprite.getGlobalBounds().height)
+	{
+		this->_velocity.y = this->_velocity.y * -1;
+	}
 }
 
 void Player::draw(sf::RenderWindow* window)
